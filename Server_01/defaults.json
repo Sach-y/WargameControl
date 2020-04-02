@@ -1,0 +1,17 @@
+{
+  "serverName" : "Server Name",
+  "password" : "Leave blank for no password",
+  "gameMode" : "1",
+  "alliances" : "0",
+  "maxTeamSize" : "10",
+  "maxPlayer" : "20",
+  "playersToStart" : "10",
+  "teamSizeDelta" : "10",
+  "nationLimit" : "-1",
+  "thematicLimit" : "-1",
+  "dateLimit" : "-1",
+  "warmUpTime" : "20",
+  "loadingTime" : "60",
+  "deploymentTime" : "120",
+  "debriefingTime" : "120"
+}
