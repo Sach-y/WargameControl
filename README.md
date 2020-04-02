@@ -35,8 +35,8 @@ Certain server settings use enum values - noted as enum(int) - use only the int 
  - `password` - password string to be used if you want the lobby to be password protected, leave blank if you don't want a password to be required
  - `gameMode` - setting the victory condition - Destruction(1), Economy(3), Conquest(4)
  - `alliances` - fighting sides - NATO vs PACT(0), NATO vs NATO(1), PACT vs PACT(2)
+ - `maxPlayers` - overall limit of players in the lobby
  - `maxTeamSize` - limits the size of team per side
- - `maxPlayer` - overall limit of players in the lobby
  - `playersToStart` - number of players required to start the countdown
  - `teamSizeDelta` - maximum player difference between teams(should prevent 10vs0 lobby situation)
  - `nationLimit` - Nation/Coalition deck limitation - None(-1), Nation or Coalition(0), Nation(1), Coalition(2)

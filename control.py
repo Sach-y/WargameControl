@@ -335,12 +335,28 @@ class Game:
     def __del__(self):
         self.logfileStream.close()
 
+    @classmethod
     def set_default_server_settings(self, path_to_json):
         # TODO FILL THIS
         print("Setting default server settings from " + path_to_json + "/defaults.json")
         with open(path_to_json + "/defaults.json", 'r') as json_file:
             parsed_json = json.load(json_file)
-
+        Server.change_name(parsed_json["serverName"])
+        Server.change_password(parsed_json["password"])
+        Server.change_game_mode(parsed_json["gameMode"])
+        Server.change_alliances(parsed_json["alliances"])
+        Server.change_max_player(parsed_json["maxPlayers"])
+        Server.change_max_team_size(parsed_json["maxTeamSize"])
+        Server.change_required_players(parsed_json["playersToStart"])
+        Server.change_team_delta(parsed_json["teamSizeDelta"])
+        Server.change_nation_constraint(parsed_json["nationLimit"])
+        Server.change_thematic_constraint(parsed_json["thematicLimit"])
+        Server.change_date_constraint(parsed_json["dateLimit"])
+        Server.change_warm_up_time(parsed_json["warmUpTime"])
+        Server.change_loading_time(parsed_json["loadingTime"])
+        Server.change_deployment_time(parsed_json["deploymentTime"])
+        Server.change_debriefing_time(parsed_json["debriefingTime"])
+        print("Defaults set.")
 
     def main(self):
         print("Server control script started")
