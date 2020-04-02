@@ -262,7 +262,7 @@ class Game:
     # ---------------------------------------------
 
     def register_events(self):
-        self.register_event('Client added in session (EugNetId : ([0-9]+)', self._on_player_connect)
+        self.register_event('Client added in session \(EugNetId : ([0-9]+)', self._on_player_connect)
         self.register_event('Client ([0-9]+) variable PlayerDeckContent set to "(.*)"', self._on_player_deck_set)
         self.register_event('Client ([0-9]+) variable PlayerLevel set to "(.*)"', self._on_player_level_set)
         self.register_event('Client ([0-9]+) variable PlayerElo set to "(.*)"', self._on_player_elo_set)
@@ -365,6 +365,7 @@ class Game:
             return 2
         print("Starting to load data from JSONs")
         Rcon.load_from_json(sys.argv[1])
+        Game.set_default_server_settings(sys.argv[1])
         
         print("Gather information run")
 
