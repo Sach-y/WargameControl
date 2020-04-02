@@ -1,5 +1,5 @@
 {
-  "rconPath" : "mcrcon",
+  "rconPath" : "mcrcon/mcrcon",
   "rconRemoteHost" : "localhost",
   "rconRemotePort" : "14885",
   "rconPassword" : "passwOOOord"
