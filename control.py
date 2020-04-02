@@ -54,22 +54,22 @@ class Game:
         # self.no_battlegroups()  # rechecking the whoole lobby while only one player changed his deck - how exactly does the server operate? do i now what deck does the player has?
         pass
 
-    def on_player_deck_set(self, playerid, playerdeck):
-        self.no_battlegroup(playerid, playerdeck)
+    def on_player_deck_set(self, player_id, player_deck):
+        self.no_battlegroup(player_id, player_deck)
 
-    def on_player_level_set(self, playerid, playerlevel):
-        self.limit_level(playerid, playerlevel)
+    def on_player_level_set(self, player_id, player_level):
+        self.limit_level(player_id, player_level)
 
-    def on_player_elo_set(self, playerid, playerelo):
+    def on_player_elo_set(self, player_id, player_elo):
         pass
 
-    def on_player_side_change(self, playerid, playerside):
+    def on_player_side_change(self, player_id, player_side):
         pass
 
-    def on_player_name_change(self, playerid, playername):
+    def on_player_name_change(self, player_id, player_name):
         pass
 
-    def on_player_disconnect(self, playerid):
+    def on_player_disconnect(self, player_id):
         pass
 
     def on_switch_to_game(self):
@@ -120,24 +120,24 @@ class Game:
                 self.players[playerID].change_deck(general_blue_deck)
                 # self.players[playerID].change_deck_name("NM General Deck BLUE")
 
-    def no_battlegroup(self, playerid, playerdeck):
+    def no_battlegroup(self, player_id, player_deck):
         """rechecks ONE players deck and switches default battlegroups for custom genereal blue/red decks"""
         general_blue_deck = "@Hg6BiGNpaZEhRCvPizQIUgbkro85IwxgoZQ9UPRDOSkkd1AIJV0hFKTi+Au8sSQaUIxGPJn0ApLeKjSKBBNQ8UpQ"
         general_red_deck = "@Qs6CCYE6DFmdBC1BOzEBfQ1woQhoUItM9LWmYVAERnEDJCwQUketJeKVWkNATCaiYdARIsUS9E9RPETJG6R70Flo1CViDoA="
         blue_battlegroup = "@AMIBkNokCG0SBHHJAjjkgRxyQI4iZ2W5lxZhIT+E/Zb4WOFjRQCYkppJSwxckFJDCTYlgJeCoQlkJHkX4qfKSSq8qzKqwtArKRfgjYI/CyQrEo+JKmXA"
         red_battlegroup = "@QsIBiNcVhHCKwi1FYhagmQtQTEc56UHol5CaiYYoFIryBMgUJm4T6E8hLoS2Asg3GTJkyZMydclGJ6yfMI7CQQlYI1KZSP8iwISSbogK"
-        if playerdeck == red_battlegroup:
-            self.players[playerid].change_deck(general_red_deck)
-            # self.players[playerid].change_deck_name("NM General Deck RED")
-        if playerdeck == blue_battlegroup:
-            self.players[playerid].change_deck(general_blue_deck)
-            # self.players[playerid].change_deck_name("NM General Deck BLUE")
-        if playerdeck == blue_battlegroup and self.players[playerid].get_side() == Side.Redfor:
-            self.players[playerid].change_deck(general_red_deck)
-            # self.players[playerid].change_deck_name("NM General Deck RED")
-        if playerdeck == red_battlegroup and self.players[playerid].get_side() == Side.Bluefor:
-            self.players[playerid].change_deck(general_blue_deck)
-            # self.players[playerid].change_deck_name("NM General Deck BLUE")
+        if player_deck == red_battlegroup:
+            self.players[player_id].change_deck(general_red_deck)
+            # self.players[player_id].change_deck_name("NM General Deck RED")
+        if player_deck == blue_battlegroup:
+            self.players[player_id].change_deck(general_blue_deck)
+            # self.players[player_id].change_deck_name("NM General Deck BLUE")
+        if player_deck == blue_battlegroup and self.players[player_id].get_side() == Side.Redfor:
+            self.players[player_id].change_deck(general_red_deck)
+            # self.players[player_id].change_deck_name("NM General Deck RED")
+        if player_deck == red_battlegroup and self.players[player_id].get_side() == Side.Bluefor:
+            self.players[player_id].change_deck(general_blue_deck)
+            # self.players[player_id].change_deck_name("NM General Deck BLUE")
 
     def map_random_rotate(self):
         """Rotate maps from the pool"""
@@ -148,16 +148,16 @@ class Game:
             self.currentMapId = 0
             random.shuffle(self.map_pool)
 
-    def limit_level(self, playerid, playerlevel):
+    def limit_level(self, player_id, playe_rlevel):
         """Kick players below certain level"""
         limit = 0
-        if playerlevel < limit:
-            print("Player level is too low: " + str(playerlevel) + ". Min is " + str(limit) + ". Kicking...")
-            self.players[playerid].kick()
+        if playe_rlevel < limit:
+            print("Player level is too low: " + str(playe_rlevel) + ". Min is " + str(limit) + ". Kicking...")
+            self.players[player_id].kick()
 
-    # ----------------------------------------------------------------------------------------------------------------------
-    # --------------------------------------- INTERNAL IMPLEMENTATION DETAILS ----------------------------------------------
-    # ----------------------------------------------------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------------
+    # --------------------------------------- INTERNAL IMPLEMENTATION DETAILS ------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------------
 
     # -------------------------------------------
     # Service event handlers
@@ -270,7 +270,7 @@ class Game:
         self.register_event('Client ([0-9]+) variable PlayerName set to "(.*)"', self._on_player_name_change)
         self.register_event('Disconnecting client ([0-9]+)', self._on_player_disconnect)
         self.register_event('Entering in loading phase state', self._on_switch_to_game)
-        self.register_event('Entering in debriephing phase state', self._on_switch_to_debriefing)
+        self.register_event('Entering in debriefing phase state', self._on_switch_to_debriefing)
         self.register_event('Entering in matchmaking state', self._on_switch_to_lobby)
 
     # -------------------------------------------
@@ -335,9 +335,27 @@ class Game:
     def __del__(self):
         self.logfileStream.close()
 
-    def setDefaultServerSettings(self, config):
-        # TODO FILL THIS
-        pass
+    @classmethod
+    def set_default_server_settings(self, path_to_json):
+        print("Setting default server settings from " + path_to_json + "/defaults.json")
+        with open(path_to_json + "/defaults.json", 'r') as json_file:
+            parsed_json = json.load(json_file)
+        Server.change_name(parsed_json["serverName"])
+        Server.change_password(parsed_json["password"])
+        Server.change_game_mode(parsed_json["gameMode"])
+        Server.change_alliances(parsed_json["alliances"])
+        Server.change_max_player(parsed_json["maxPlayers"])
+        Server.change_max_team_size(parsed_json["maxTeamSize"])
+        Server.change_required_players(parsed_json["playersToStart"])
+        Server.change_team_delta(parsed_json["teamSizeDelta"])
+        Server.change_nation_constraint(parsed_json["nationLimit"])
+        Server.change_thematic_constraint(parsed_json["thematicLimit"])
+        Server.change_date_constraint(parsed_json["dateLimit"])
+        Server.change_warm_up_time(parsed_json["warmUpTime"])
+        Server.change_loading_time(parsed_json["loadingTime"])
+        Server.change_deployment_time(parsed_json["deploymentTime"])
+        Server.change_debriefing_time(parsed_json["debriefingTime"])
+        print("Defaults set.")
 
     def main(self):
         print("Server control script started")
@@ -346,6 +364,7 @@ class Game:
             return 2
         print("Starting to load data from JSONs")
         Rcon.load_from_json(sys.argv[1])
+        Game.set_default_server_settings(sys.argv[1])
         
         print("Gather information run")
 
@@ -387,8 +406,8 @@ class Player:
     Incapsulates player data manipulation
     """
 
-    def __init__(self, playerid):
-        self._id = playerid
+    def __init__(self, player_id):
+        self._id = player_id
         self._side = Side.Bluefor
         self._deck = ""
         self._level = 0
@@ -442,9 +461,9 @@ class Player:
         """Forcibly assign new deck to a player"""
         Rcon.execute("setpvar " + self._id + " PlayerDeckContent " + deck)
 
-    def change_deck_name(self, deckname):
+    def change_deck_name(self, deck_name):
         """Renames players deck"""
-        Rcon.execute("setpvar " + self._id + " PlayerDeckName " + deckname)
+        Rcon.execute("setpvar " + self._id + " PlayerDeckName " + deck_name)
 
     def kick(self):
         """Kick player"""
@@ -458,7 +477,7 @@ class Player:
 class Server:
     """
     Server data structure
-    Incapsulates server manipulation
+    Encapsulates server manipulation
     """
 
     @classmethod
@@ -474,6 +493,62 @@ class Server:
     @classmethod
     def change_name(cls, name):
         Rcon.execute("setsvar ServerName " + name)
+
+    @classmethod
+    def change_password(cls, password):
+        Rcon.execute("setsvar Password " + password)
+
+    @classmethod
+    def change_game_mode(cls, game_mode):
+        Rcon.execute("setsvar VictoryCond " + game_mode)
+
+    @classmethod
+    def change_alliances(cls, alliances):
+        Rcon.execute("setsvar GameType " + alliances)
+
+    @classmethod
+    def change_max_player(cls, max_player_count):
+        Rcon.execute("setsvar NbMaxPlayer " + max_player_count)
+
+    @classmethod
+    def change_max_team_size(cls, max_team_size):
+        Rcon.execute("setsvar MaxTeamSize " + max_team_size)
+
+    @classmethod
+    def change_required_players(cls, player_count):
+        Rcon.execute("setsvar NbMinPlayer " + player_count)
+
+    @classmethod
+    def change_team_delta(cls, delta):
+        Rcon.execute("setsvar DeltaMaxTeamSize " + delta)
+
+    @classmethod
+    def change_nation_constraint(cls, limit):
+        Rcon.execute("setsvar NationConstraint " + limit)
+
+    @classmethod
+    def change_thematic_constraint(cls, limit):
+        Rcon.execute("setsvar ThematicConstraint " + limit)
+
+    @classmethod
+    def change_date_constraint(cls, limit):
+        Rcon.execute("setsvar DateConstraint " + limit)
+
+    @classmethod
+    def change_warm_up_time(cls, time):
+        Rcon.execute("setsvar WarmupCountdown " + time)
+
+    @classmethod
+    def change_loading_time(cls, time):
+        Rcon.execute("setsvar LoadingTimeMax " + time)
+
+    @classmethod
+    def change_deployment_time(cls, time):
+        Rcon.execute("setsvar DeploiementTimeMax " + time)
+
+    @classmethod
+    def change_debriefing_time(cls, time):
+        Rcon.execute("setsvar DebriefingTimeMax " + time)
 
 
 class Side(Enum):
