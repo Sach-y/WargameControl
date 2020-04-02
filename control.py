@@ -337,7 +337,6 @@ class Game:
 
     @classmethod
     def set_default_server_settings(self, path_to_json):
-        # TODO FILL THIS
         print("Setting default server settings from " + path_to_json + "/defaults.json")
         with open(path_to_json + "/defaults.json", 'r') as json_file:
             parsed_json = json.load(json_file)
