@@ -13,6 +13,8 @@ from subprocess import call
 from enum import Enum
 from random import random
 from math import floor
+import json
+import sys
 
 
 class Rcon:
@@ -29,6 +31,17 @@ class Rcon:
                            ' -p ' + cls.rconPassword + ' "' + command + '"'
         call(execution_string, shell=True)
 
+    @classmethod
+    def load_from_json(cls, path_to_json):
+        """Loads class variables from the json provided in the variable"""
+        print("Loading rcon information from " + path_to_json)
+        with open(path_to_json + "/rcon.json", 'r') as json_file:
+            parsed_json = json.load(json_file)
+        Rcon.rconPath = parsed_json['rconPath']
+        Rcon.rconPassword = parsed_json['rconPassword']
+        Rcon.rconRemoteHost = parsed_json['rconRemoteHost']
+        Rcon.rconRemotePort = parsed_json['rconRemotePort']
+
 
 class Game:
     """Main class, containing game process manipulation"""
@@ -39,7 +52,7 @@ class Game:
 
     def on_player_connect(self, playerid):
         # self.no_battlegroups()  # rechecking the whoole lobby while only one player changed his deck - how exactly does the server operate? do i now what deck does the player has?
-		pass
+        pass
 
     def on_player_deck_set(self, playerid, playerdeck):
         self.no_battlegroup(playerid, playerdeck)
@@ -321,20 +334,26 @@ class Game:
 
     def __del__(self):
         self.logfileStream.close()
-		
-	def setDefaultServerSettings(self, config):
-		# TODO FILL THIS
-		pass
+
+    def setDefaultServerSettings(self, config):
+        # TODO FILL THIS
+        pass
 
     def main(self):
         print("Server control script started")
+        if sys.argv.__len__() < 2:
+            print("Please run this script with a path to a folder with setting json files as a parameter.")
+            return 2
+        print("Starting to load data from JSONs")
+        Rcon.load_from_json(sys.argv[1])
+        
         print("Gather information run")
 
         self.update()
 
         print("Gather information run is over")
         self.infoRun = False
-		# self.setDefaultServerSettings()
+        # self.setDefaultServerSettings()
 
         print("Server control started")
         while True:
