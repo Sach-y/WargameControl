@@ -141,7 +141,7 @@ class Game:
 
     def map_random_rotate(self):
         """Rotate maps from the pool"""
-        Server.change_map(self.map_pool[self.currentMapId])
+        Server.change_map_settings(self.map_pool[self.currentMapId])
         print("Rotating map to " + self.map_pool[self.currentMapId][0])
         self.currentMapId += 1
         if self.currentMapId == len(self.map_pool):
@@ -481,14 +481,34 @@ class Server:
     """
 
     @classmethod
-    def change_map(cls, mapsettings):
-        Rcon.execute("setsvar NbMinPlayer 21")  # so that the game wont start
-        Rcon.execute("setsvar Map " + mapsettings[0])
-        Rcon.execute("setsvar TimeLimit " + mapsettings[1])
-        Rcon.execute("setsvar InitMoney " + mapsettings[2])
-        Rcon.execute("setsvar ScoreLimit " + mapsettings[3])
-        Rcon.execute("setsvar IncomeRate " + mapsettings[4])
-        Rcon.execute("setsvar NbMinPlayer 20")
+    def change_map_settings(cls, map_settings):
+        Server.change_required_players(21)
+        Server.change_map(map_settings[0])
+        Server.change_time_limit(map_settings[1])
+        Server.change_starting_points(map_settings[2])
+        Server.change_victory_points(map_settings[3])
+        Server.change_income_rate(map_settings[4])
+        Server.change_required_players(20)
+
+    @classmethod
+    def change_map(cls, map_name):
+        Rcon.execute("setsvar Map " + map_name)
+
+    @classmethod
+    def change_time_limit(cls, time):
+        Rcon.execute("setsvar TimeLimit " + time)
+
+    @classmethod
+    def change_starting_points(cls, points):
+        Rcon.execute("setsvar InitMoney " + points)
+
+    @classmethod
+    def change_victory_points(cls, points):
+        Rcon.execute("setsvar ScoreLimit " + points)
+
+    @classmethod
+    def change_income_rate(cls, rate):
+        Rcon.execute("setsvar IncomeRate " + rate)
 
     @classmethod
     def change_name(cls, name):
