@@ -286,6 +286,8 @@ class Game:
         self.register_events()
         self.currentMapId = 0
         # (map, time_limit(seconds), init_money, score_target, income_rate(0-none <-->5-very high))
+        self.map_pool = dict()
+        '''
         self.map_pool = [("Destruction_2x2_port_Wonsan_Terrestre", "3000", "4000", "8000", "1"),
                          ("Destruction_2x3_Hwaseong", "3000", "4800", "8000", "1"),
                          ("Destruction_2x3_Esashi", "3000", "4500", "8000", "1"),
@@ -319,7 +321,7 @@ class Game:
                          ("Destruction_3x3_Gangjin", "3600", "5000", "8000", "1"),
                          ("Destruction_5x3_Marine_1_Alt", "3600", "5000", "8000", "1")
                          ]
-
+        '''
         # Getting starting line
         while True:
             line = self.logfileStream.readline()
