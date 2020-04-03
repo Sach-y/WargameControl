@@ -1,0 +1,36 @@
+{
+  "exampleMapObject": {
+    "mapName": "Wonsan harbour",
+    "mapCode": "Destruction_2x2_port_Wonsan_Terrestre",
+    "timeLimit": "3000",
+    "initMoney": "4000",
+    "targetScore": "8000",
+    "incomeRate": "1"
+  },
+  "maps": [
+    {
+      "mapName": "",
+      "mapCode": "",
+      "timeLimit": "000",
+      "initMoney": "000",
+      "targetScore": "000",
+      "incomeRate": "1"
+    },
+    {
+      "mapName": "Wonsan harbor(land)",
+      "mapCode": "Destruction_2x2_port_Wonsan_Terrestre",
+      "timeLimit": "3000",
+      "initMoney": "4000",
+      "targetScore": "8000",
+      "incomeRate": "1"
+    },
+    {
+      "mapName": "",
+      "mapCode": "",
+      "timeLimit": "000",
+      "initMoney": "000",
+      "targetScore": "000",
+      "incomeRate": "1"
+    }
+  ]
+}

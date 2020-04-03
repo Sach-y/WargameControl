@@ -142,17 +142,17 @@ class Game:
     def map_random_rotate(self):
         """Rotate maps from the pool"""
         Server.change_map_settings(self.map_pool[self.currentMapId])
-        print("Rotating map to " + self.map_pool[self.currentMapId][0])
+        print("Rotating map to " + self.map_pool[self.currentMapId]["mapName"])
         self.currentMapId += 1
         if self.currentMapId == len(self.map_pool):
             self.currentMapId = 0
             random.shuffle(self.map_pool)
 
-    def limit_level(self, player_id, playe_rlevel):
+    def limit_level(self, player_id, player_level):
         """Kick players below certain level"""
         limit = 0
-        if playe_rlevel < limit:
-            print("Player level is too low: " + str(playe_rlevel) + ". Min is " + str(limit) + ". Kicking...")
+        if player_level < limit:
+            print("Player level is too low: " + str(player_level) + ". Min is " + str(limit) + ". Kicking...")
             self.players[player_id].kick()
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -357,6 +357,12 @@ class Game:
         Server.change_debriefing_time(parsed_json["debriefingTime"])
         print("Defaults set.")
 
+    def load_map_pool_from_json(self, path_to_json):
+        print("Loading maps from " + path_to_json + "/map_pool.json")
+        with open(path_to_json + "/map_pool.json", 'r') as json_file:
+            parsed_json = json.load(json_file)
+        self.map_pool = parsed_json["maps"]
+
     def main(self):
         print("Server control script started")
         if sys.argv.__len__() < 2:
@@ -365,7 +371,9 @@ class Game:
         print("Starting to load data from JSONs")
         Rcon.load_from_json(sys.argv[1])
         Game.set_default_server_settings(sys.argv[1])
-        
+        self.load_map_pool_from_json(sys.argv[1])
+        print("JSON data loaded")
+
         print("Gather information run")
 
         self.update()
@@ -482,13 +490,13 @@ class Server:
 
     @classmethod
     def change_map_settings(cls, map_settings):
-        Server.change_required_players(21)
-        Server.change_map(map_settings[0])
-        Server.change_time_limit(map_settings[1])
-        Server.change_starting_points(map_settings[2])
-        Server.change_victory_points(map_settings[3])
-        Server.change_income_rate(map_settings[4])
-        Server.change_required_players(20)
+        Server.change_required_players("21")
+        Server.change_map(map_settings["mapCode"])
+        Server.change_time_limit(map_settings["timeLimit"])
+        Server.change_starting_points(map_settings["initMoney"])
+        Server.change_victory_points(map_settings["targetScore"])
+        Server.change_income_rate(map_settings["incomeRate"])
+        Server.change_required_players("20")
 
     @classmethod
     def change_map(cls, map_name):
