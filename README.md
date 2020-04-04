@@ -45,7 +45,16 @@ Certain server settings use enum values - noted as enum(int) - use only the int 
  - `warmUpTime` - lobby countdown till game starts, cannot be less than 20
  - `loadingTime` - maximum lobby loading time - if a player fails to load into the game in the given interval, he will be kicked
  - `deploymentTime` - length of a in-game ready countdown
- - `debriefingTime` - length of a debrief time  
+ - `debriefingTime` - length of a debrief time
+ 
+ #### map_pool.json:
+Only important dara values are objects in `maps` array, the structure of the objects should be equal to the `exampleMapObject`.
+ - `mapName` - Human readable version of the map settings (To easily distinguish maps in the list)
+ - `mapCode` - Full map config name used to set the map via rcon
+ - `timeLimit` - Game time limit in seconds
+ - `initMoney` - Initial points distributed evenly between players
+ - `targetScore` - Victory Points - number of points required for the game to end 0 for no limit
+ - `incomeRate` -  income point modifier - None(0), Very Low(1), Low(2), Normal(3), High(4), Very High(5)
  
 Principle of work:
 -------------------
@@ -63,7 +72,7 @@ Workflow:
  - User operates, depending on the information about current state of the game 
  (gamestate var), players information (players dictionary, keys - player id) and information of event happened (handler function arguments)
  - User reacts with rcon commands via Rcon.execute()  
- - Several rcon commands are incapsulated in Player class, so user can just call player.change_deck() or player.kick()
+ - Several rcon commands are encapsulated in Player class, so user can just call player.change_deck() or player.kick()
  - Methods, that perform rcon operations are called change* to differ from set*
  - User code intended to be placed in functions in "Custom actions" section 
  
