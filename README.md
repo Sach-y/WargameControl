@@ -15,21 +15,27 @@ Requirements:
 
 Usage:
 ------------------
- - Place it in the folder with your wargame server
+ - Place it in the folder with your wargame server, it is to be run from the same folder as `serverlog.txt`
  - Set up folder with json files that will be used as a settings
  - Run script giving the folder path (relative is ok) as a first parameter
+```shell
+python ./control.py "./Server_01"
+```
+
 
 JSON File description:
 -------------------
  Description of JSON files and their contents
  
 #### rcon.json:
+Contains details tied to the rcon settings
  - `rconPath` - path to your rcon client
  - `rconRemoteHost` - IP address of your server
  - `rconRemotePort` - port for the rcon
  - `rconPassword` - password used for the client
 
 #### defaults.json:
+Contains default settings of the server.
 Certain server settings use enum values - noted as enum(int) - use only the int value 
  - `serverName` - Name of the Wargame lobby
  - `password` - password string to be used if you want the lobby to be password protected, leave blank if you don't want a password to be required
@@ -44,11 +50,12 @@ Certain server settings use enum values - noted as enum(int) - use only the int 
  - `dateLimit` - Year deck limitation - None(-1),  Pre85(0), Pre80(1)
  - `warmUpTime` - lobby countdown till game starts, cannot be less than 20
  - `loadingTime` - maximum lobby loading time - if a player fails to load into the game in the given interval, he will be kicked
- - `deploymentTime` - length of a in-game ready countdown
+ - `deploymentTime` - length of an in-game ready countdown
  - `debriefingTime` - length of a debrief time
  
  #### map_pool.json:
-Only important dara values are objects in `maps` array, the structure of the objects should be equal to the `exampleMapObject`.
+Definition of the server map rotation pool. 
+The only important data values are objects in `maps` array, the structure of the objects should be equal to the `exampleMapObject` from the provided sample (`Server_01\map_pool.json`).
  - `mapName` - Human readable version of the map settings (To easily distinguish maps in the list)
  - `mapCode` - Full map config name used to set the map via rcon
  - `timeLimit` - Game time limit in seconds

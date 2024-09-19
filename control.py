@@ -413,7 +413,7 @@ class Game:
 class Player:
     """
     Player data structure
-    Incapsulates player data manipulation
+    Encapsulates player data manipulation
     """
 
     def __init__(self, player_id):
